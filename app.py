@@ -10,7 +10,7 @@ cpu=CPUTemperature()
 
 
 # Create an ADS1115 ADC (16-bit) instance. Remember!
-adc = Adafruit_ADS1x15.ADS1115()
+adc = Adafruit_ADS1x15.ADS1115(0x49)
 
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.
 GAIN = 1
