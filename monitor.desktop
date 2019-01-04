@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Monitoring Page
+Comment=Module 8
+Icon=/home/pi/raspberrypi.jpg
+URL=http://localhost:5000

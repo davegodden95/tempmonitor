@@ -1,0 +1,45 @@
+body {
+	background: white;
+	color: #002F56;
+}
+h1{
+	color: #002F56;
+	font-family: verdana;
+	font-size:150%;
+	text-align: center;
+}
+
+h2{
+	color: #002F56;
+	font-family: verdana;
+	font-size:100%;
+	text-align: left
+}
+h3{
+	color: #002F56;
+	font-family: verdana;
+	font-size:70%;
+	float: left;
+	margin:0% 1%;
+}
+hr{
+	width:90%
+	color: #002f56;
+}
+div{
+	background-color:#FAFAFA;
+	width:30%;
+	margin:1%;
+	padding:2px;
+	border-left: 2px solid #002f56;
+	position: relative;
+}
+.left{
+	float: left;
+}
+.subtle{
+	position: absolute;
+	bottom:5%;
+	width:90%;
+	height:10%;
+}
