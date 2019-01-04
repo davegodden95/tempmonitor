@@ -11,3 +11,5 @@ Install adafruit:
     	cd Adafruit_Python_ADS1x15
     	sudo python setup.py install
 
+Enable I2C
+Create /home/pi/Desktop/software/logs/data.csv and leave empty.
