@@ -1,31 +1,11 @@
-from flask import Flask, render_template
-import datetime, os, time
-import math
+import datetime, os, time, math, Adafruit_ADS1x15
 from gpiozero import CPUTemperature
 from time import sleep
 from datetime import datetime
-
 import RPi.GPIO as GPIO
 
-#Import the ADS1x15 module.
-import Adafruit_ADS1x15
-
-cpu=CPUTemperature()
-
-#setup ethernet LED
-GPIO.setup(10, GPIO.OUT, initial=GPIO.LOW)
 #setup program LED
 GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW)
-#setup fault LED
-GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
-#setup RPI LED
-GPIO.setup(27, GPIO.OUT, initial=GPIO.LOW)
-
-#set LEDs correctly
-GPIO.output(22, GPIO.HIGH)
-GPIO.output(27, GPIO.HIGH)
-GPIO.output(17, GPIO.HIGH)
-GPIO.output(10, GPIO.HIGH)
 
 # Create an ADS1115 ADC (16-bit) instance.
 adc = Adafruit_ADS1x15.ADS1115(address=0x49, busnum=1)
@@ -42,15 +22,18 @@ B1 = 0.000257
 C1 = 0.00000262
 D1 = 0.0000000638
 
+cpu=CPUTemperature()
+
 #100% value
 fullvar = 26270
 
-app = Flask(__name__)
+file = open("/home/pi/Desktop/software/logs/data.csv", "a")
+if os.stat("/home/pi/Desktop/software/logs/data.csv").st_size == 0:
+    file.write("Time,NTC 0,NTC 1,NTC 2,NTC 3, CPU Temp\n")
 
-@app.route('/')
-def index():
+print("Time,NTC 0,NTC 1,NTC 2,NTC 3, CPU Temp\n")
 
-    file = open("/home/pi/Desktop/software/logs/data.csv", "a")
+while True:
     now = datetime.now()
     #read adc values
     var0 = fullvar - adc.read_adc(0, gain=GAIN)
@@ -94,26 +77,11 @@ def index():
 
     #cpu temperature
     cputemp = round(cpu.temperature,1)
-
-    file.write(str(now)+"," + str(ntc0temp)+"\n")
+        
+    file.write(str(now)+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
     file.flush()
-    time.sleep(5)
-    file.close()
+
+    print(str(now)+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp))
     
-    data = {
-        'ntc0temp': ntc0temp,
-        'ntc1temp': ntc1temp,
-        'ntc2temp': ntc2temp,
-        'ntc3temp': ntc3temp,
-        'cputemp': cputemp,
-        'var0': var0,
-        'var1': var1,
-        'var2': var2,
-        'var3': var3
-        }
-    return render_template('index.html', **data)
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
-
+    time.sleep(10)
 
