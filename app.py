@@ -3,14 +3,30 @@ import datetime, os
 import math
 from gpiozero import CPUTemperature
 
+import RPi.GPIO as GPIO
+
 #Import the ADS1x15 module.
 import Adafruit_ADS1x15
 
 cpu=CPUTemperature()
 
+#setup ethernet LED
+GPIO.setup(10, GPIO.OUT, initial=GPIO.LOW)
+#setup program LED
+GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW)
+#setup fault LED
+GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
+#setup RPI LED
+GPIO.setup(27, GPIO.OUT, initial=GPIO.LOW)
 
-# Create an ADS1115 ADC (16-bit) instance. Remember!
-adc = Adafruit_ADS1x15.ADS1115(0x49)
+#set LEDs correctly
+GPIO.output(22, GPIO.HIGH)
+GPIO.output(27, GPIO.HIGH)
+GPIO.output(17, GPIO.HIGH)
+GPIO.output(10, GPIO.HIGH)
+
+# Create an ADS1115 ADC (16-bit) instance.
+adc = Adafruit_ADS1x15.ADS1115(address=0x49, busnum=1)
 
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.
 GAIN = 1
@@ -24,25 +40,28 @@ B1 = 0.000257
 C1 = 0.00000262
 D1 = 0.0000000638
 
+#100% value
+fullvar = 26270
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     #read adc values
-    var0 = adc.read_adc(0, gain=GAIN)
-    var1 = adc.read_adc(1, gain=GAIN)
-    var2 = adc.read_adc(2, gain=GAIN)
-    var3 = adc.read_adc(3, gain=GAIN)
+    var0 = fullvar - adc.read_adc(0, gain=GAIN)
+    var1 = fullvar - adc.read_adc(1, gain=GAIN)
+    var2 = fullvar - adc.read_adc(2, gain=GAIN)
+    var3 = fullvar - adc.read_adc(3, gain=GAIN)
     
     #calculate NTC resistance 0
-    if var0 > 5:
+    if var0 > 50:
         vin0 = (3.3/26440)*var0
         ntc0 = (1000-(1000*(vin0/3.3)))/(vin0/3.3)
         #calculate temperature 0
         ntc0temp = round(1/(A1 +(B1*math.log(ntc0/ntcres)) +(C1*math.log(ntc0/ntcres)*math.log(ntc0/ntcres))+(D1*math.log(ntc0/ntcres)*math.log(ntc0/ntcres)*math.log(ntc0/ntcres))) - 273.15,1)
     else:
         ntc0temp = "NaN"
-    if var1 > 5:
+    if var1 > 50:
         #calculate NTC resistance 1
         vin1 = (3.3/26440)*var1
         ntc1 = (1000-(1000*(vin1/3.3)))/(vin1/3.3)
@@ -50,7 +69,7 @@ def index():
         ntc1temp = round(1/(A1 +(B1*math.log(ntc1/ntcres)) +(C1*math.log(ntc1/ntcres)*math.log(ntc1/ntcres))+(D1*math.log(ntc1/ntcres)*math.log(ntc1/ntcres)*math.log(ntc1/ntcres))) - 273.15,1)
     else:
         ntc1temp = "NaN"
-    if var2 > 5:
+    if var2 > 50:
         #calculate NTC resistance 2
         vin2 = (3.3/26440)*var2
         ntc2 = (1000-(1000*(vin2/3.3)))/(vin2/3.3)
@@ -58,7 +77,7 @@ def index():
         ntc2temp = round(1/(A1 +(B1*math.log(ntc2/ntcres)) +(C1*math.log(ntc2/ntcres)*math.log(ntc2/ntcres))+(D1*math.log(ntc2/ntcres)*math.log(ntc2/ntcres)*math.log(ntc2/ntcres))) - 273.15,1)
     else:
         ntc2temp = "NaN"
-    if var3 > 5:
+    if var3 > 50:
         #calculate NTC resistance 2
         vin3 = (3.3/26440)*var3
         ntc3 = (1000-(1000*(vin3/3.3)))/(vin3/3.3)
@@ -87,3 +106,5 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+
