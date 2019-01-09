@@ -1,6 +1,6 @@
 import datetime, os, time, math, Adafruit_ADS1x15
 from gpiozero import CPUTemperature
-from time import sleep
+from time import sleep, strftime
 from datetime import datetime
 import RPi.GPIO as GPIO
 
@@ -77,11 +77,17 @@ while True:
 
     #cpu temperature
     cputemp = round(cpu.temperature,1)
-        
-    file.write(str(now)+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
+    file = open("/home/pi/Desktop/software/logs/data.csv", "a")    
+    file.write(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
     file.flush()
+    file.close()
 
-    print(str(now)+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp))
+    file = open("/home/pi/Desktop/software/logs/currentdata.csv", "w")
+    file.write(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
+    file.flush()
+    file.close()
+
+    print(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp))
     
     time.sleep(10)
 

@@ -22,13 +22,33 @@
 <h2>Enclosure: {{ntc0temp}}'C</h2>
 <h2>CPU: {{cputemp}}'C</h2>
 </div>
+<canvas id="myChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "My First dataset",
+            borderColor: 'rgb(0, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+
 <div class ="subtle">
-<h2 style = "color:#AAAAAA;">Raw Data</h2>
-<h3>ADC0: {{var0}}</h3>
-<h3>ADC1: {{var1}}</h3>
-<h3>ADC2: {{var2}}</h3>
-<h3>ADC3: {{var3}}</h3>
-<h3 style="float:right;"> Software version 0.1. Any issues, contact David Godden x6770</h3>
+<h2 style = "color:#AAAAAA;">Data</h2>
+<h3>Last updated at: {{var0}}</h3>
+<h3 style="float:right;"> Software version 0.2. Any issues, contact David Godden x6770</h3>
 </div>
 </body>
 </html>
