@@ -27,8 +27,8 @@ cpu=CPUTemperature()
 #100% value
 fullvar = 26270
 
-file = open("/home/pi/Desktop/software/logs/data.csv", "a")
-if os.stat("/home/pi/Desktop/software/logs/data.csv").st_size == 0:
+file = open("/home/pi/Desktop/software/static/data.csv", "a")
+if os.stat("/home/pi/Desktop/software/static/data.csv").st_size == 0:
     file.write("Time,NTC 0,NTC 1,NTC 2,NTC 3, CPU Temp\n")
 
 print("Time,NTC 0,NTC 1,NTC 2,NTC 3, CPU Temp\n")
@@ -77,12 +77,12 @@ while True:
 
     #cpu temperature
     cputemp = round(cpu.temperature,1)
-    file = open("/home/pi/Desktop/software/logs/data.csv", "a")    
+    file = open("/home/pi/Desktop/software/static/data.csv", "a")    
     file.write(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
     file.flush()
     file.close()
 
-    file = open("/home/pi/Desktop/software/logs/currentdata.csv", "w")
+    file = open("/home/pi/Desktop/software/static/currentdata.csv", "w")
     file.write(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp)+"\n")
     file.flush()
     file.close()
