@@ -1,3 +1,21 @@
-body: {
-	
+* {
+  margin: 0;
+}
+html, body {
+  height: 95%;
+}
+.page-wrap {
+  min-height: 10%;
+  /* equal to footer height */
+  margin-bottom: -20px; 
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.site-footer, .page-wrap:after {
+  height: 20px; 
+}
+.site-footer {
+  background: light grey;
 }

@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 def index():
 
-    f = open("/home/pi/Desktop/software/logs/currentdata.csv", "r")
+    f = open("/home/pi/Desktop/software/static/currentdata.csv", "r")
     dataStr = f.readline()
     out = []
     out = dataStr.split(',')
@@ -38,7 +38,12 @@ def index():
         'ntc2temp': out[8],
         'ntc3temp': out[9],
         'cputemp': out[10],
-        'var0': out [3] + ":" + out [4] + ":" + out [5] + " " +out[2] + "-"+out[1] + "-" +out[0]
+        'sec': out [5],
+        'min': out [4],
+        'hour': out [3],
+        'day': out[2],
+        'month': out[1],
+        'year': out[0],
         }
     return render_template('index.html', **data)
     file.close()

@@ -8,7 +8,7 @@ function parseData(creategraph){
 }
 
 function createGraph(data){
-	var temp0 = ["NTC 1"];
+	var temp0 = ["RPI Enclosure Temp"];
 	var temp1 = ["NTC 2"];
 	var temp2 = ["NTC 3"];
 	var temp3 = ["NTC 4"];
@@ -29,17 +29,32 @@ function createGraph(data){
 	var chart = c3.generate({
 		bindto: '#chart',
 	    	data: {
-			columns: [temp0,temp1,temp2,temp3,cputemp]
+			columns: [temp1,temp2,temp3,temp0,cputemp],
+			type: 'spline',
+			hide: true,
+			hide: ['temp0',temp0,cputemp],
 		},
 		axis: {
 		        x: {
-		            type: 'category',
-		            categories: time
-		        }
+				show: false,
+				type: 'category',
+				categories: time
+		        },
+			y: {
+				tick:{
+					format: d3.format(",.1f")
+				},
+				label: 'Deg C'
+			}
     		},
 		zoom: {
 			enabled: true
-	    	}
+	    	},
+		grid: {
+			y: {
+			    show: true
+			},
+		}
 		
 	});
 	}
