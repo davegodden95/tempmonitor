@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 def index():
 
-    f = open("/home/pi/Desktop/software/static/currentdata.csv", "r")
+    f = open("/home/pi/Desktop/software/static/logs/currentdata.csv", "r")
     dataStr = f.readline()
     out = []
     out = dataStr.split(',')

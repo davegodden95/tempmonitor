@@ -1,5 +1,7 @@
 function parseData(creategraph){
-	Papa.parse("../static/data.csv",{
+	var rightNow = new Date();
+	var res = rightNow.toISOString().slice(0,10).replace(/-/g,"");
+	Papa.parse("../static/logs/" + res + ".csv",{
 		download: true,
 		complete: function(results){
 			createGraph(results.data);
