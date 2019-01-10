@@ -1,15 +1,15 @@
-function parseData(creategraph){
+function parseData(createLinegraph){
 	var rightNow = new Date();
 	var res = rightNow.toISOString().slice(0,10).replace(/-/g,"");
 	Papa.parse("../static/logs/" + res + ".csv",{
 		download: true,
 		complete: function(results){
-			createGraph(results.data);
+			createLineGraph(results.data);
 		}
 	});
 }
 
-function createGraph(data){
+function createLineGraph(data){
 	var temp0 = ["RPI Enclosure Temp"];
 	var temp1 = ["NTC 2"];
 	var temp2 = ["NTC 3"];
@@ -29,12 +29,9 @@ function createGraph(data){
 	console.log(temp0);
 	
 	var chart = c3.generate({
-		bindto: '#chart',
 	    	data: {
 			columns: [temp1,temp2,temp3,temp0,cputemp],
 			type: 'spline',
-			hide: true,
-			hide: ['temp0',temp0,cputemp],
 		},
 		axis: {
 		        x: {
@@ -56,9 +53,10 @@ function createGraph(data){
 			y: {
 			    show: true
 			},
-		}
+		},
+		bindto: '#chart'
 		
 	});
 	}
 	
-parseData (createGraph);
+parseData (createLineGraph);

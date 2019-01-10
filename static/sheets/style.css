@@ -5,7 +5,7 @@ html, body {
   height: 95%;
 }
 .page-wrap {
-  min-height: 10%;
+  min-height: 100%;
   /* equal to footer height */
   margin-bottom: -20px; 
 }
@@ -18,4 +18,18 @@ html, body {
 }
 .site-footer {
   background: light grey;
+}
+#wrapper {
+    border-top: 1px solid gray;
+    padding: 5px
+}
+#div1 {
+    display: inline-block;
+    width:19%;
+}
+#div2 {
+    display: inline-block;
+    width:160px;
+    height:160px;
+    border: 1px solid green;
 }
