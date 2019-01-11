@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import datetime, os, time, math, Adafruit_ADS1x15
 from gpiozero import CPUTemperature
 from time import sleep, strftime
@@ -92,5 +94,5 @@ while True:
 
     print(strftime("%G,%m,%d,%H,%M,%S")+"," + str(ntc0temp)+"," + str(ntc1temp)+"," + str(ntc2temp)+"," + str(ntc3temp)+"," + str(cputemp))
     
-    time.sleep(10)
+    time.sleep(30)
 

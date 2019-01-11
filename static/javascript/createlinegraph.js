@@ -30,7 +30,7 @@ function createLineGraph(data){
 	
 	var chart = c3.generate({
 	    	data: {
-			columns: [temp1,temp2,temp3,temp0,cputemp],
+			columns: [temp1,temp2,temp3,temp0],
 			type: 'spline',
 		},
 		axis: {

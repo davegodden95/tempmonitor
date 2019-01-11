@@ -1,0 +1,64 @@
+<html>
+<head>
+<link rel='stylesheet' href='static/sheets/style.css' />
+<link rel='stylesheet' href='static/sheets/bootstrap.min.css' />
+<link rel='stylesheet' href='static/sheets/font-awesome.min.css' />
+<!--meta http-equiv="refresh" content="10"-->
+<title>Module 9</title>		
+<!-- Load c3.css -->
+<link href="static/sheets/c3.css" rel="stylesheet" type="text/css">
+<!-- Load d3.js and c3.js -->
+<script src="static/javascript/d3.v3.min.js" charset="utf-8"></script>
+<script src="static/javascript/c3.min.js"></script>
+<!-- Load papaparse -->
+<script src="static/javascript/papaparse.min.js"></script>
+<script src="static/javascript/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+<h1 align="center"> Module 9 - Temperature Overview</h1>
+<br>
+<br>
+		<h2>Trend for {{day}}-{{month}}-{{year}}</h2>
+		<div id="chart">
+		<script src="static/javascript/createlinegraph.js"></script>
+		</div>
+	<br>
+	<button id="refreshdata" style="float: right;">Refresh</button>
+	
+	<div id="wrapper">
+		<h2>Realtime Data - Last updated on {{hour}}:{{min}}:{{sec}}</h2>
+		<div id="div1">
+			<h4>RPi CPU: {{cputemp}}'C</h4>
+			<div id="RPi CPU"></div>
+		</div>
+		<div id="div1">	
+			<h4>RPi Enclosure: {{ntc0temp}}'C</h4>
+		</div>	
+		<div id="div1">	
+			<h4>Temp 1: {{ntc1temp}}'C</h4>
+		</div>	
+		<div id="div1">	
+			<h4>Temp 2: {{ntc2temp}}'C</h4>
+		</div>	
+		<div id="div1">	
+			<h4>Temp 3: {{ntc3temp}}'C</h4>
+		</div>
+	</div>
+</div>
+	
+<footer class="site-footer">
+<br>
+	<script type ="text/javascript">
+		$("#refreshdata").click(function () {
+		$("#wrapper").load(' #wrapper>*');
+		});
+	</script>
+	
+	
+  <h6 align="right"> Software version 0.3. Any issues, contact David Godden x6770 </h3>
+</footer
+
+</body>
+</html>
